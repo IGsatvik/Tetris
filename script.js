@@ -68,8 +68,7 @@ resizeBg();
 
 const TYPES = ['I','O','T','S','Z','J','L'];
 
-// Ambient floating background tetrominos
-const bgPieces = Array.from({ length: 18 }, () => spawnBgPiece(true));
+const bgPieces = Array.from({ length: 14 }, () => spawnBgPiece(true));
 
 function spawnBgPiece(initial = false){
   const type = TYPES[(Math.random()*TYPES.length)|0];
@@ -79,22 +78,21 @@ function spawnBgPiece(initial = false){
     color: COLORS[type],
     x: Math.random() * window.innerWidth,
     y: initial ? Math.random() * window.innerHeight : window.innerHeight + 80,
-    size: 16 + Math.random() * 18,
-    speed: 0.3 + Math.random() * 0.7,
+    size: 14 + Math.random() * 16,
+    speed: 0.3 + Math.random() * 0.6,
     rot: Math.random() * Math.PI * 2,
     rotSpeed: (Math.random() - 0.5) * 0.015,
-    alpha: 0.04 + Math.random() * 0.08
+    alpha: 0.03 + Math.random() * 0.06
   };
 }
 
 function updateAndDrawBg(){
   bgCtx.clearRect(0, 0, bgCv.width, bgCv.height);
-
   bgPieces.forEach((p, idx) => {
     p.y -= p.speed;
     p.rot += p.rotSpeed;
 
-    if(p.y < -120) {
+    if(p.y < -100) {
       bgPieces[idx] = spawnBgPiece();
       return;
     }
@@ -110,7 +108,7 @@ function updateAndDrawBg(){
     bgCtx.globalAlpha = p.alpha;
     bgCtx.fillStyle = p.color;
     bgCtx.shadowColor = p.color;
-    bgCtx.shadowBlur = 12;
+    bgCtx.shadowBlur = 8;
 
     for(let r = 0; r < rows; r++){
       for(let c = 0; c < cols; c++){
@@ -121,7 +119,7 @@ function updateAndDrawBg(){
             r * p.size - pieceH / 2,
             p.size - 2,
             p.size - 2,
-            4
+            3
           );
           bgCtx.fill();
         }
@@ -200,7 +198,7 @@ function rotateMat(m, dir){
 }
 
 function tryRotate(dir){
-  if(!cur) return;
+  if(!cur || !running || paused) return;
   const newMat = rotateMat(cur.mat, dir);
   const newRot = ((cur.rot+dir)+4)%4;
   const table  = cur.type==='I' ? WK.I : WK.JLSTZ;
@@ -218,16 +216,16 @@ function tryRotate(dir){
 }
 
 function moveH(dx){
-  if(cur && valid(cur,dx)){ cur.x+=dx; resetLock(); }
+  if(cur && running && !paused && valid(cur,dx)){ cur.x+=dx; resetLock(); }
 }
 
 function softDrop(){
-  if(!cur) return;
+  if(!cur || !running || paused) return;
   if(valid(cur,0,1)){ cur.y++; score++; dropAcc=0; resetLock(); }
 }
 
 function hardDrop(){
-  if(!cur) return;
+  if(!cur || !running || paused) return;
   let d=0;
   while(valid(cur,0,d+1)) d++;
   score += d*2;
@@ -296,7 +294,7 @@ function lockPiece(){
 }
 
 function doHold(){
-  if(!canHold||!cur) return;
+  if(!canHold||!cur||!running||paused) return;
   canHold=false;
   if(holdType){
     const tmp=holdType;
@@ -312,15 +310,15 @@ function doHold(){
 }
 
 function spawnParticles(cx,cy,color){
-  for(let i=0;i<12;i++){
+  for(let i=0;i<10;i++){
     const a=Math.random()*Math.PI*2;
-    const s=.6+Math.random()*4.2;
+    const s=.6+Math.random()*3.5;
     particles.push({
       x:cx, y:cy,
       vx:Math.cos(a)*s, vy:Math.sin(a)*s,
       alpha:1,
-      size:1.4+Math.random()*2.8,
-      decay:.016+Math.random()*.018,
+      size:1.2+Math.random()*2.2,
+      decay:.02+Math.random()*.02,
       color
     });
   }
@@ -372,7 +370,7 @@ function drawMini(ctx2d, type, cw, ch){
   if(!type) return;
   const mat=SHAPES[type], color=COLORS[type];
   const R=mat.length, C=mat[0].length;
-  const cs=Math.min(Math.floor(cw/(C+.6)), Math.floor(ch/(R+.6)), 22);
+  const cs=Math.min(Math.floor(cw/(C+.6)), Math.floor(ch/(R+.6)), 18);
   const ox=Math.floor((cw-C*cs)*.5);
   const oy=Math.floor((ch-R*cs)*.5);
   mat.forEach((row,r)=>row.forEach((v,c)=>{
@@ -429,7 +427,7 @@ function render(){
     ctx.globalAlpha=p.alpha;
     ctx.fillStyle=p.color;
     ctx.shadowColor=p.color;
-    ctx.shadowBlur=7;
+    ctx.shadowBlur=6;
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
     ctx.fill();
@@ -535,10 +533,37 @@ function restart(){
   setTimeout(startGame,320);
 }
 
+// Touch & Key Repeating (DAS) Helper
 const dasH={};
 function dasOn(key,fn){ fn(); dasOff(key); dasH[key]=setTimeout(()=>{ dasH[key]=setInterval(fn,ARR_MS); },DAS_MS); }
 function dasOff(key){ clearTimeout(dasH[key]); clearInterval(dasH[key]); delete dasH[key]; }
 
+function bindTouchBtn(elId, onAction, useDas = false, dasKey = '') {
+  const btn = document.getElementById(elId);
+  if(!btn) return;
+  
+  btn.addEventListener('touchstart', e => {
+    e.preventDefault();
+    if(useDas) dasOn(dasKey, onAction);
+    else onAction();
+  }, { passive: false });
+
+  if(useDas) {
+    btn.addEventListener('touchend', e => { e.preventDefault(); dasOff(dasKey); }, { passive: false });
+    btn.addEventListener('touchcancel', e => { e.preventDefault(); dasOff(dasKey); }, { passive: false });
+  }
+}
+
+// Bind mobile touch controls
+bindTouchBtn('t-left',  () => moveH(-1), true, 'tl');
+bindTouchBtn('t-right', () => moveH(1),  true, 'tr');
+bindTouchBtn('t-down',  softDrop,        true, 'td');
+bindTouchBtn('t-rot',   () => tryRotate(1));
+bindTouchBtn('t-hard',  hardDrop);
+bindTouchBtn('t-hold',  doHold);
+bindTouchBtn('t-pause', togglePause);
+
+// Keyboard controls
 document.addEventListener('keydown',e=>{
   if(!running){
     if(e.code==='Enter'||e.code==='Space'){
