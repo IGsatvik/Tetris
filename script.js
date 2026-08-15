@@ -53,9 +53,83 @@ const holdCv  = document.getElementById('hold-cv');
 const holdCtx = holdCv.getContext('2d');
 const nextCv  = document.getElementById('next-cv');
 const nextCtx = nextCv.getContext('2d');
+const bgCv    = document.getElementById('bg-cv');
+const bgCtx   = bgCv.getContext('2d');
 
 cv.width  = COLS * CELL;
 cv.height = ROWS * CELL;
+
+function resizeBg(){
+  bgCv.width  = window.innerWidth;
+  bgCv.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeBg);
+resizeBg();
+
+const TYPES = ['I','O','T','S','Z','J','L'];
+
+// Ambient floating background tetrominos
+const bgPieces = Array.from({ length: 18 }, () => spawnBgPiece(true));
+
+function spawnBgPiece(initial = false){
+  const type = TYPES[(Math.random()*TYPES.length)|0];
+  return {
+    type,
+    mat: SHAPES[type],
+    color: COLORS[type],
+    x: Math.random() * window.innerWidth,
+    y: initial ? Math.random() * window.innerHeight : window.innerHeight + 80,
+    size: 16 + Math.random() * 18,
+    speed: 0.3 + Math.random() * 0.7,
+    rot: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.015,
+    alpha: 0.04 + Math.random() * 0.08
+  };
+}
+
+function updateAndDrawBg(){
+  bgCtx.clearRect(0, 0, bgCv.width, bgCv.height);
+
+  bgPieces.forEach((p, idx) => {
+    p.y -= p.speed;
+    p.rot += p.rotSpeed;
+
+    if(p.y < -120) {
+      bgPieces[idx] = spawnBgPiece();
+      return;
+    }
+
+    const rows = p.mat.length;
+    const cols = p.mat[0].length;
+    const pieceW = cols * p.size;
+    const pieceH = rows * p.size;
+
+    bgCtx.save();
+    bgCtx.translate(p.x, p.y);
+    bgCtx.rotate(p.rot);
+    bgCtx.globalAlpha = p.alpha;
+    bgCtx.fillStyle = p.color;
+    bgCtx.shadowColor = p.color;
+    bgCtx.shadowBlur = 12;
+
+    for(let r = 0; r < rows; r++){
+      for(let c = 0; c < cols; c++){
+        if(p.mat[r][c]){
+          bgCtx.beginPath();
+          bgCtx.roundRect(
+            c * p.size - pieceW / 2,
+            r * p.size - pieceH / 2,
+            p.size - 2,
+            p.size - 2,
+            4
+          );
+          bgCtx.fill();
+        }
+      }
+    }
+    bgCtx.restore();
+  });
+}
 
 const elScore  = document.getElementById('score-val');
 const elLevel  = document.getElementById('level-val');
@@ -74,8 +148,6 @@ let cur, nextType, holdType, canHold;
 let running, paused;
 let raf, lastTs, dropAcc, lockAcc, locking;
 let bag, particles;
-
-const TYPES = ['I','O','T','S','Z','J','L'];
 
 function fillBag(){
   bag = [...TYPES];
@@ -378,6 +450,9 @@ function loop(ts){
   raf=requestAnimationFrame(loop);
   const dt=Math.min(ts-(lastTs||ts),50);
   lastTs=ts;
+
+  updateAndDrawBg();
+
   if(running && !paused){
     dropAcc+=dt;
     if(dropAcc>=dropMs(level)){
