@@ -8,7 +8,7 @@
 
 A modern, responsive, and arcade-accurate web implementation of the classic **Tetris** puzzle game. Built from scratch using vanilla HTML5 Canvas, modern CSS, and ES6+ JavaScript—with zero external frameworks or runtime dependencies.
 
-### 🌐 [Click Here to Play the Live Demo](https://your-username.github.io/your-repository-name/)
+### 🌐 [Click Here to Play the Live Demo](https://igsatvik.github.io/Tetris/)
 
 ---
 
