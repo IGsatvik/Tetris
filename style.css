@@ -1,28 +1,24 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Surfaces: Smoked Espresso & Dark Teak Panels */
-  --bg:       #181310;
-  --s1:       #241c16;
-  --s2:       #332820;
-  --border:   rgba(246, 238, 227, 0.08);
+  --bg:        #181310;
+  --s1:        #241c16;
+  --s2:        #332820;
+  --border:    rgba(246, 238, 227, 0.08);
 
-  /* Typography: Polished Bone & Warm Ash */
-  --text:     #f6eee3;
-  --muted:    #a08b79;
+  --text:      #f6eee3;
+  --muted:     #a08b79;
 
-  /* Accents: Warm Brass & Polished Amber */
-  --accent:   #d97724;
-  --accent-b: #f1a94e;
+  --accent:    #d97724;
+  --accent-b:  #f1a94e;
 
-  /* Tetromino Palette */
-  --I: #38a3a5; /* Vintage Patina Blue */
-  --O: #f3dfa2; /* Blonde Maple */
-  --T: #d97724; /* Honey Amber */
-  --S: #709775; /* Forest Moss */
-  --Z: #c84b31; /* Cherry Wood */
-  --J: #b87333; /* Polished Copper */
-  --L: #e09f3e; /* Golden Teak */
+  --I: #38a3a5;
+  --O: #f3dfa2;
+  --T: #d97724;
+  --S: #709775;
+  --Z: #c84b31;
+  --J: #b87333;
+  --L: #e09f3e;
 }
 
 html, body { height: 100%; }
