@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TETRIS — Classic Block Puzzle</title>
   <meta name="description" content="A beautifully designed modern Tetris game with ghost piece, hold, SRS rotation, and smooth animations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,90 +19,70 @@
   <span class="best-wrap">BEST<strong id="hi-val">0</strong></span>
 </header>
 
-<main class="main-container">
-  <div class="layout">
-    <!-- Hold & Controls Panel -->
-    <div class="panel left-panel">
-      <div class="card">
-        <div class="clabel">Hold</div>
-        <div class="prev-wrap"><canvas id="hold-cv" width="100" height="66"></canvas></div>
-      </div>
-      <div class="card desktop-only">
-        <div class="clabel">Controls</div>
-        <div class="ctrl-grid">
-          <span class="ckey">&#8592; &#8594;</span><span class="cact">Move</span>
-          <span class="ckey">&#8593; / Z</span><span class="cact">Rotate</span>
-          <span class="ckey">&#8595;</span><span class="cact">Soft drop</span>
-          <span class="ckey">SPC</span><span class="cact">Hard drop</span>
-          <span class="ckey">C</span><span class="cact">Hold</span>
-          <span class="ckey">P / Esc</span><span class="cact">Pause</span>
-        </div>
-      </div>
+<div class="layout">
+  <div class="panel">
+    <div class="card">
+      <div class="clabel">Hold</div>
+      <div class="prev-wrap"><canvas id="hold-cv" width="100" height="66"></canvas></div>
     </div>
-
-    <!-- Board Area -->
-    <div class="board-wrap">
-      <canvas id="cv"></canvas>
-      <div class="ov" id="ov-start">
-        <div class="ov-eye">Classic Puzzle</div>
-        <div class="ov-title">TETRIS</div>
-        <div class="ov-sub">Stack blocks, clear lines, survive.</div>
-        <button class="btn" id="btn-start">Start Playing</button>
-      </div>
-      <div class="ov hide" id="ov-pause">
-        <div class="ov-eye">Paused</div>
-        <div class="ov-title" style="font-size:36px;line-height:1.05">BREAK<br>TIME</div>
-        <div class="ov-sub" style="margin-bottom:24px">Take a moment.</div>
-        <button class="btn" id="btn-resume">Resume</button>
-      </div>
-      <div class="ov hide" id="ov-over">
-        <div class="ov-eye">Game Over</div>
-        <div class="score-block">
-          <div class="score-big" id="final-score">0</div>
-          <div class="score-lbl">Final Score</div>
-        </div>
-        <div id="badge-best" class="badge badge-gold" style="display:none">&#9733; New Best!</div>
-        <button class="btn" id="btn-restart">Play Again</button>
-      </div>
-    </div>
-
-    <!-- Score & Next Panel -->
-    <div class="panel right-panel">
-      <div class="card">
-        <div class="clabel">Next</div>
-        <div class="prev-wrap"><canvas id="next-cv" width="100" height="66"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="clabel">Score</div>
-        <div class="cval sm" id="score-val">0</div>
-      </div>
-      <div class="card">
-        <div class="clabel">Level</div>
-        <div class="cval" id="level-val">1</div>
-        <div class="pbar"><div class="pbar-fill" id="prog"></div></div>
-      </div>
-      <div class="card">
-        <div class="clabel">Lines</div>
-        <div class="cval" id="lines-val">0</div>
+    <div class="card">
+      <div class="clabel">Controls</div>
+      <div class="ctrl-grid">
+        <span class="ckey">&#8592; &#8594;</span><span class="cact">Move</span>
+        <span class="ckey">&#8593; / Z</span><span class="cact">Rotate</span>
+        <span class="ckey">&#8595;</span><span class="cact">Soft drop</span>
+        <span class="ckey">SPC</span><span class="cact">Hard drop</span>
+        <span class="ckey">C</span><span class="cact">Hold</span>
+        <span class="ckey">P / Esc</span><span class="cact">Pause</span>
       </div>
     </div>
   </div>
 
-  <!-- Mobile Touch Controls -->
-  <div class="touch-ctrls" id="touch-ctrls">
-    <div class="t-dpad">
-      <button class="t-btn" id="t-left" aria-label="Left">&#9664;</button>
-      <button class="t-btn" id="t-down" aria-label="Soft Drop">&#9660;</button>
-      <button class="t-btn" id="t-right" aria-label="Right">&#9654;</button>
+  <div class="board-wrap">
+    <canvas id="cv"></canvas>
+    <div class="ov" id="ov-start">
+      <div class="ov-eye">Classic Puzzle</div>
+      <div class="ov-title">TETRIS</div>
+      <div class="ov-sub">Stack blocks, clear lines, survive.</div>
+      <button class="btn" id="btn-start">Start Playing</button>
     </div>
-    <div class="t-actions">
-      <button class="t-btn t-btn-action" id="t-hold">HOLD</button>
-      <button class="t-btn t-btn-action" id="t-hard">&#9650;&#9650;</button>
-      <button class="t-btn t-btn-action t-btn-accent" id="t-rot">&#8635;</button>
-      <button class="t-btn t-btn-action" id="t-pause">&#10074;&#10074;</button>
+    <div class="ov hide" id="ov-pause">
+      <div class="ov-eye">Paused</div>
+      <div class="ov-title" style="font-size:42px;line-height:1.05">BREAK<br>TIME</div>
+      <div class="ov-sub" style="margin-bottom:28px">Take a moment.</div>
+      <button class="btn" id="btn-resume">Resume</button>
+    </div>
+    <div class="ov hide" id="ov-over">
+      <div class="ov-eye">Game Over</div>
+      <div class="score-block">
+        <div class="score-big" id="final-score">0</div>
+        <div class="score-lbl">Final Score</div>
+      </div>
+      <div id="badge-best" class="badge badge-gold" style="display:none">&#9733; New Best!</div>
+      <button class="btn" id="btn-restart">Play Again</button>
     </div>
   </div>
-</main>
+
+  <div class="panel">
+    <div class="card">
+      <div class="clabel">Score</div>
+      <div class="cval sm" id="score-val">0</div>
+    </div>
+    <div class="card">
+      <div class="clabel">Level</div>
+      <div class="cval" id="level-val">1</div>
+      <div class="pbar"><div class="pbar-fill" id="prog"></div></div>
+    </div>
+    <div class="card">
+      <div class="clabel">Lines</div>
+      <div class="cval" id="lines-val">0</div>
+    </div>
+    <div class="card">
+      <div class="clabel">Next</div>
+      <div class="prev-wrap"><canvas id="next-cv" width="100" height="66"></canvas></div>
+    </div>
+  </div>
+</div>
 
 <div id="notif"></div>
 
