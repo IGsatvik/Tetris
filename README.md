@@ -42,4 +42,5 @@ A modern, responsive, and arcade-accurate web implementation of the classic **Te
 ├── index.html       # Semantic HTML layout and canvas elements
 ├── style.css        # Custom CSS, typography, theme variables, and overlays
 ├── script.js        # Core game engine, SRS matrix math, loop, and render logic
+├── LICENSE          # MIT License terms and conditions
 └── README.md        # Project overview and documentation
