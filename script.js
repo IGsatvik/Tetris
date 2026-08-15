@@ -3,8 +3,13 @@
 const COLS = 10, ROWS = 20, CELL = 30;
 
 const COLORS = {
-  I:'#22d3ee', O:'#facc15', T:'#c084fc',
-  S:'#4ade80', Z:'#f87171', J:'#60a5fa', L:'#fb923c'
+  I: '#38a3a5', // Patina Blue
+  O: '#f3dfa2', // Blonde Maple
+  T: '#d97724', // Honey Amber
+  S: '#709775', // Forest Moss
+  Z: '#c84b31', // Cherry Wood
+  J: '#b87333', // Polished Copper
+  L: '#e09f3e'  // Golden Teak
 };
 
 const SHAPES = {
@@ -42,7 +47,7 @@ const WK = {
 
 const SCORE_TABLE = [0,100,300,500,800];
 const NOTIF_TEXT  = ['','SINGLE','DOUBLE','TRIPLE','TETRIS!'];
-const NOTIF_COLOR = ['','#e3e3f0','#4ade80','#22d3ee','#facc15'];
+const NOTIF_COLOR = ['', '#f6eee3', '#709775', '#38a3a5', '#f1a94e'];
 const LOCK_MS = 500, DAS_MS = 155, ARR_MS = 45;
 
 function dropMs(lvl){ return Math.max(55, 900-(lvl-1)*72); }
@@ -68,7 +73,6 @@ resizeBg();
 
 const TYPES = ['I','O','T','S','Z','J','L'];
 
-// Ambient floating background tetrominos
 const bgPieces = Array.from({ length: 18 }, () => spawnBgPiece(true));
 
 function spawnBgPiece(initial = false){
@@ -271,7 +275,7 @@ function lockPiece(){
     const newLvl = Math.floor(lines/10)+1;
     if(newLvl>level){
       level=newLvl;
-      showNotif('LEVEL  UP!','#c084fc');
+      showNotif('LEVEL  UP!','#f1a94e');
     } else {
       showNotif(NOTIF_TEXT[n], NOTIF_COLOR[n]);
     }
@@ -353,9 +357,9 @@ function drawBlock(ctx2d, col, row, color, alpha, cs){
   ctx2d.roundRect(x,y,s,s,3);
   ctx2d.fill();
   const g=ctx2d.createLinearGradient(x,y,x,y+s);
-  g.addColorStop(0,   'rgba(255,255,255,.30)');
+  g.addColorStop(0,   'rgba(255,255,255,.28)');
   g.addColorStop(.4,  'rgba(255,255,255,.05)');
-  g.addColorStop(1,   'rgba(0,0,0,.25)');
+  g.addColorStop(1,   'rgba(0,0,0,.30)');
   ctx2d.fillStyle=g;
   ctx2d.beginPath();
   ctx2d.roundRect(x,y,s,s,3);
@@ -383,7 +387,7 @@ function drawMini(ctx2d, type, cw, ch){
     const g=ctx2d.createLinearGradient(x,y,x,y+s);
     g.addColorStop(0,  'rgba(255,255,255,.28)');
     g.addColorStop(.4, 'rgba(255,255,255,.04)');
-    g.addColorStop(1,  'rgba(0,0,0,.22)');
+    g.addColorStop(1,  'rgba(0,0,0,.25)');
     ctx2d.fillStyle=g;
     ctx2d.beginPath(); ctx2d.roundRect(x,y,s,s,2); ctx2d.fill();
   }));
