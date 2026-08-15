@@ -1,6 +1,5 @@
 # 🕹️ Modern Tetris (HTML5 Canvas & JavaScript)
 
-[![Live Demo](https://img.shields.io/badge/Demo-Play%20Online-brightgreen?logo=googlechrome&logoColor=white)](https://igsatvik.github.io/tetris/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 [![HTML5](https://img.shields.io/badge/HTML5-Canvas-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
 [![CSS3](https://img.shields.io/badge/CSS3-Modern%20UI-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
