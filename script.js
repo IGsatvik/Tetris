@@ -3,13 +3,13 @@
 const COLS = 10, ROWS = 20, CELL = 30;
 
 const COLORS = {
-  I: '#38a3a5', // Patina Blue
-  O: '#f3dfa2', // Blonde Maple
-  T: '#d97724', // Honey Amber
-  S: '#709775', // Forest Moss
-  Z: '#c84b31', // Cherry Wood
-  J: '#b87333', // Polished Copper
-  L: '#e09f3e'  // Golden Teak
+  I: '#38a3a5', 
+  O: '#f3dfa2', 
+  T: '#d97724', 
+  S: '#709775', 
+  Z: '#c84b31', 
+  J: '#b87333', 
+  L: '#e09f3e'  
 };
 
 const SHAPES = {
