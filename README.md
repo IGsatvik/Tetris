@@ -25,14 +25,14 @@ A modern, responsive, and arcade-accurate web implementation of the classic **Te
 
 | Action | Primary Key | Secondary Key |
 | :--- | :--- | :--- |
-| **Move Left / Right** | `←` / `→`[cite: 1] | `A` / `D`[cite: 1] |
-| **Rotate Clockwise** | `↑`[cite: 1] | `W`[cite: 1] |
-| **Rotate Counter-Clockwise** | `Z`[cite: 1] | — |
-| **Soft Drop** | `↓`[cite: 1] | `S`[cite: 1] |
-| **Hard Drop** | `Space`[cite: 1] | — |
-| **Hold Piece** | `C`[cite: 1] | — |
-| **Pause / Resume** | `P`[cite: 1] | `Esc`[cite: 1] |
-| **Start / Restart** | `Enter`[cite: 1] | `Space`[cite: 1] |
+| **Move Left / Right** | `←` / `→` | `A` / `D` |
+| **Rotate Clockwise** | `↑` | `W` |
+| **Rotate Counter-Clockwise** | `Z` | — |
+| **Soft Drop** | `↓` | `S` |
+| **Hard Drop** | `Space` | — |
+| **Hold Piece** | `C` | — |
+| **Pause / Resume** | `P` | `Esc` |
+| **Start / Restart** | `Enter` | `Space` |
 
 ---
 
