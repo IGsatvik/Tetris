@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TETRIS — Classic Block Puzzle</title>
+  <meta name="description" content="A beautifully designed modern Tetris game with ghost piece, hold, SRS rotation, and smooth animations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <span class="logo">TET<em>R</em>IS</span>
+  <span class="best-wrap">BEST<strong id="hi-val">0</strong></span>
+</header>
+
+<div class="layout">
+  <div class="panel">
+    <div class="card">
+      <div class="clabel">Hold</div>
+      <div class="prev-wrap"><canvas id="hold-cv" width="100" height="66"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="clabel">Controls</div>
+      <div class="ctrl-grid">
+        <span class="ckey">&#8592; &#8594;</span><span class="cact">Move</span>
+        <span class="ckey">&#8593; / Z</span><span class="cact">Rotate</span>
+        <span class="ckey">&#8595;</span><span class="cact">Soft drop</span>
+        <span class="ckey">SPC</span><span class="cact">Hard drop</span>
+        <span class="ckey">C</span><span class="cact">Hold</span>
+        <span class="ckey">P / Esc</span><span class="cact">Pause</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="board-wrap">
+    <canvas id="cv"></canvas>
+    <div class="ov" id="ov-start">
+      <div class="ov-eye">Classic Puzzle</div>
+      <div class="ov-title">TETRIS</div>
+      <div class="ov-sub">Stack blocks, clear lines, survive.</div>
+      <button class="btn" id="btn-start">Start Playing</button>
+    </div>
+    <div class="ov hide" id="ov-pause">
+      <div class="ov-eye">Paused</div>
+      <div class="ov-title" style="font-size:42px;line-height:1.05">BREAK<br>TIME</div>
+      <div class="ov-sub" style="margin-bottom:28px">Take a moment.</div>
+      <button class="btn" id="btn-resume">Resume</button>
+    </div>
+    <div class="ov hide" id="ov-over">
+      <div class="ov-eye">Game Over</div>
+      <div class="score-block">
+        <div class="score-big" id="final-score">0</div>
+        <div class="score-lbl">Final Score</div>
+      </div>
+      <div id="badge-best" class="badge badge-gold" style="display:none">&#9733; New Best!</div>
+      <button class="btn" id="btn-restart">Play Again</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <div class="clabel">Score</div>
+      <div class="cval sm" id="score-val">0</div>
+    </div>
+    <div class="card">
+      <div class="clabel">Level</div>
+      <div class="cval" id="level-val">1</div>
+      <div class="pbar"><div class="pbar-fill" id="prog"></div></div>
+    </div>
+    <div class="card">
+      <div class="clabel">Lines</div>
+      <div class="cval" id="lines-val">0</div>
+    </div>
+    <div class="card">
+      <div class="clabel">Next</div>
+      <div class="prev-wrap"><canvas id="next-cv" width="100" height="66"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<div id="notif"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
